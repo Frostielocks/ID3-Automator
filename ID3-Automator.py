@@ -9,7 +9,7 @@ import eyed3
 # sys.argv[1] may contain the path to the rules for the general tags (see documentation assign_gen_tags).
 # Author: Mathijs Hubrechtsen
 
-# -------------------------------------------------- Part: Substring Methods
+# -------------------------------------------------- Section: Substring Methods
 
 # Get all the substrings in a given string located between the first case of a given start_target (exclusive)
 # and end_target (exclusive). For example if this method is called on the following string:
@@ -37,6 +37,17 @@ def get_substrings_between(string, start_target, end_target):
 #           string = text + start_target + substring_1 + end_target + substring_2 + end_target + text
 # This implementation will return substring_1 + end_target + substring_2
 # This is done because of wikipedia's html layout.
+#
+# For example when parsing the following wikipedia html snippet:
+#
+# <tr style="background-color:#f7f7f7">
+# <td style="padding-right:10px;text-align:right;vertical-align:top">2.</td>
+# <td style="vertical-align:top">"Outcast"</td>
+# <td style="padding-right:10px;text-align:right;vertical-align:top">5:25</td>
+#
+# We want to end parsing the substring right after "Outcast", to do this we need to end at the second usage of </td>.
+# The reason we don't simply use: </td>\n<td style="padding-right:10px;text-align:right;vertical-align:top">
+# as the end target, is because not every song snippet ends with that substring.
 def get_all_substrings_between(string, start_target, end_target):
     result = list()
     # As long as the start_target can be found do...
@@ -58,7 +69,7 @@ def get_all_substrings_between(string, start_target, end_target):
         start = string.find(start_target)
     return result
 
-# -------------------------------------------------- Part: Extraction/Substitution Methods
+# -------------------------------------------------- Section: Extraction/Substitution Methods
 
 
 # Extract all cases of a given target (exclusive) from a given string.
@@ -145,7 +156,7 @@ def substitute(string, og_target, new_target):
 # Extract all the garbage from a given filtered html output made in the main method of this program.
 # NOTE: See Implementation.
 # FIXME: Update is necessary if wikipedia switches it's syntax.
-# FIXME: Add more extract/substitute tasks.
+# TODO: Add more extract/substitute tasks.
 def extract_garbage(output):
     extract_tasks = ["</td>", "<td style=\"vertical-align:top\">", "\"", "\n",
                      "<span style=font-size:85%>", "</span>", "</span"]
@@ -170,12 +181,13 @@ def extract_garbage(output):
         output[i] = string
     return output
 
-# -------------------------------------------------- Part: General Tag Methods
+# -------------------------------------------------- Section: General Tag Methods
+#           General Tag Methods = ["artist", "album", "genre", "publisher", "year", "debug"]
 
 
 # If possible, converts a given genre to the normalized version of this genre.
 # For example if the genre is Conscious hip hop, this method will return Hip-Hop.
-# FIXME: Add more normalizations.
+# TODO: Add more normalizations.
 def lookup_normalized_genre(genre):
     if genre == "Hip hop":
         return "Hip-Hop"
@@ -189,7 +201,7 @@ def lookup_normalized_genre(genre):
 
 # If possible, converts a given publisher to the normalized version of this publisher.
 # For example if the publisher is Visionary Music Group, this method will return Visionary.
-# FIXME: Add more normalizations.
+# TODO: Add more normalizations.
 def lookup_normalized_publisher(publisher):
     if publisher == "Visionary Music Group":
         return "Visionary"
@@ -216,7 +228,7 @@ def assign_gen_tags(path):
 # Extract all the garbage from a given filtered string output made in the infer_gen_tags method of this program.
 # NOTE: See Implementation.
 # FIXME: Update is necessary if wikipedia switches it's syntax.
-# FIXME: Add more extract/substitute tasks.
+# TODO: Add more extract/substitute tasks.
 def infer_gen_tags_extract_garbage(string):
     extract_tasks = ["\"", "\n"]
     extract_between_tasks = [["<sup", "</sup>"]]
@@ -297,7 +309,8 @@ def infer_gen_tags(html):
     gen_tags[4] = extract(gen_tags[4], "(")
     return gen_tags
 
-# -------------------------------------------------- Part: Specific Tag Methods
+# -------------------------------------------------- Section: Specific Tag Methods
+#           Specific Tag Methods = [ ['song name', 'number', 'artist names'], ...]
 
 
 # Helper method of generate_spec_tags, this method will normalize the featuring artist part of a given string.
@@ -341,7 +354,7 @@ def generate_spec_tags(output, gen_tags):
         spec_tags.append(temp)
     return spec_tags
 
-# -------------------------------------------------- Part: Assign id3 Tags Methods.
+# -------------------------------------------------- Section: Assign id3 Tags Methods.
 
 
 # Assign the id3 tags of the .mp3 files of songs in the given album located in this program's directory
@@ -401,9 +414,11 @@ def assign_id3_tags(spec_tags, gen_tags):
 def main():
     del[sys.argv[0]]
 
+    # Load the test link & file
     if dev_mode:
+        print("[!] DEV MODE ENABLED [!]")
         sys.argv.append("https://en.wikipedia.org/wiki/Under_Pressure_(album)")
-        # sys.argv.append("test_rules.txt")
+        sys.argv.append("Tests/test-rules.txt")
 
     # Get and decode the html file located at the given wikipedia page
     html = urllib.request.urlopen(sys.argv[0]).read()
