@@ -34,7 +34,7 @@ debug (True or False) = Shows output confirmation.
 
 ### Prerequisites
 
-* Windows OS or python3
+* Windows OS or [Python 3.*](https://www.python.org/download/releases/3.0/)
 
 ### Installing
 
