@@ -61,10 +61,8 @@ debug (True or False) = Shows output confirmation.
 
 ## Running
 
-* **Running ID3-Automator:**
-
 ```
-1. Navigate to the directory where you saved ID3Automator.exe and python35.dll
+1. Navigate to the directory where you saved ID3Automator
 2. Open the terminal
 3. If running executable: type ID3Automator.exe with command line arguments as specified in Usage
 3. If running .py: type python ID3-Automator.py with command line arguments as specified in Usage
