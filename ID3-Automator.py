@@ -104,7 +104,7 @@ def extract_between(string, start_target, end_target):
     return string
 
 
-# Extract everything of the first html link tag from a given string.(<a href="...">text</a>) except it's text.
+# Extract everything of the first html link tag from a given string.(<a href="...">text</a>) except its text.
 # For example if this method is called on the following string:
 #           string = substring_1 + <a href="...">text</a> + substring_2 + <a href="...">text</a>
 # This method will return substring_1 + text + substring_2 + <a href="...">text</a>
