@@ -155,7 +155,7 @@ def substitute(string, og_target, new_target):
 
 # Extract all the garbage from a given filtered html output made in the main method of this program.
 # NOTE: See Implementation.
-# FIXME: Update is necessary if wikipedia switches it's syntax.
+# FIXME: Update is necessary if wikipedia switches its syntax.
 # TODO: Add more extract/substitute tasks.
 def extract_garbage(output):
     extract_tasks = ["</td>", "<td style=\"vertical-align:top\">", "\"", "\n",
@@ -247,7 +247,7 @@ def infer_gen_tags_extract_garbage(string):
 # Helper method of infer_gen_tags, this method will return the publisher of the album
 # at the given wikipedia link specified by the user.
 def infer_gen_tags_publisher(html):
-    start_target = "title=\"Record label\">Label</a></th>\n<td class=\"hlist\">"
+    start_target = "title=\"Record label\">Label</a></th><td class=\"hlist\">"
     string = get_substrings_between(html, start_target, "</td>")
     try:
         string = extract_text_from_link_tag(get_substrings_between(string, "<li>", "</li>"))
@@ -263,7 +263,7 @@ def infer_gen_tags_publisher(html):
 # Helper method of infer_gen_tags, this method will return the genre of the album
 # at the given wikipedia link specified by the user
 def infer_gen_tags_genre(html):
-    start_target = "<th scope=\"row\"><a href=\"/wiki/Music_genre\" title=\"Music genre\">Genre</a></th>\n" + \
+    start_target = "<th scope=\"row\"><a href=\"/wiki/Music_genre\" title=\"Music genre\">Genre</a></th>" + \
                    "<td class=\"category hlist\">"
     string = get_substrings_between(html, start_target, "</td>")
     try:
@@ -283,7 +283,7 @@ def infer_gen_tags(html):
     gen_tags = ["artist", "album", "genre", "publisher", "year", "False"]
 
     # Get the album artist.
-    string = get_substrings_between(html, " by <span class=\"contributor\">", "</span>")
+    string = get_substrings_between(html, "<div class=\"contributor\" style=\"display:inline\">", "</div>")
     gen_tags[0] = extract_text_from_link_tag(string)
 
     # Get the album name.
@@ -305,7 +305,7 @@ def infer_gen_tags(html):
     start_target = "<td style=\"width: 33%; text-align: center; vertical-align: top; padding: .2em .1em\">"
     start = html.find(start_target)
     string = html[start: len(html)]
-    gen_tags[4] = get_substrings_between(string, "<br />\n", ")")
+    gen_tags[4] = get_substrings_between(string, "<br />(", ")")
     gen_tags[4] = extract(gen_tags[4], "(")
     return gen_tags
 
@@ -431,10 +431,10 @@ def main():
         gen_tags = assign_gen_tags(sys.argv[1])
 
     # Construct the search targets.
-    color1 = "<tr style=\"background-color:#fff\">\n"
-    color2 = "<tr style=\"background-color:#f7f7f7\">\n"
+    color1 = "<tr style=\"background-color:#fff\">"
+    color2 = "<tr style=\"background-color:#f7f7f7\">"
     start_garbage = "<td style=\"padding-right:10px;text-align:right;vertical-align:top\">"
-    end_target = "</td>\n"
+    end_target = "</td>"
 
     # Combine the raw outputs of the two colors.
     list1 = get_all_substrings_between(html, color1 + start_garbage, end_target)
