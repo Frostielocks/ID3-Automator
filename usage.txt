@@ -1,1 +1,0 @@
-usage: ID3Automator.exe [wikipedia_link] [file | -]

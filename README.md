@@ -34,23 +34,9 @@ debug (True or False) = Shows output confirmation.
 
 ### Prerequisites
 
-* Windows OS or [Python 3.*](https://www.python.org/download/releases/3.0/)
+* [Python 3.*](https://www.python.org/download/releases/3.0/)
 
 ### Installing
-
-* **Basic Install:** Only install the executable.
-  <br/>**IMPORTANT:** If you wish to execute the executable, python35.dll must always be located in the same directory as the executable. The executable should also named ID3Automator.exe NOT ID3-Automator.exe, this is because (-) is a special character in windows.
-
-```
-1. Navigate to ID3-Automator/Release/
-2. Right click ID3Automator.exe
-3. Click save link as...
-4. Save as executable in your preferred destination
-5. Right click python35.dll
-6. Click save link as...
-7. Save in the same destination as the executable
-```
-
 * **Python Install:** Only install the .py file.
 
 ```
@@ -64,7 +50,6 @@ debug (True or False) = Shows output confirmation.
 ```
 1. Navigate to the directory where you saved ID3Automator
 2. Open the terminal
-3. If running executable: type ID3Automator.exe with command line arguments as specified in Usage
 3. If running .py: type python ID3-Automator.py with command line arguments as specified in Usage
 ```
 
