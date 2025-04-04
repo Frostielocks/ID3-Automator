@@ -7,7 +7,7 @@ import eyed3
 # The programs assumes that all the .mp3 files are initialized with their publishing years.
 # sy.argv[0] contains the wikipedia link to the album of the songs in the .mp3 files.
 # sys.argv[1] may contain the path to the rules for the general tags (see documentation assign_gen_tags).
-# Author: Mathijs Hubrechtsen
+# Author: Roos Hubrechtsen
 
 # -------------------------------------------------- Section: Substring Methods
 
